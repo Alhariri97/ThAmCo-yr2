@@ -1,0 +1,123 @@
+* {
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+}
+
+/*Style for Event pages*/
+/*Create*/
+.select2-container--default .select2-selection--multiple {
+    background-color: #30115e;
+}
+.select2-results__option {
+    background-color: #30115e;
+}
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #5897fb;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__rendered li{
+    color: black;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    margin-right: 10px;
+    margin-top: 7px;
+    padding: 3px 8px;
+}
+.card.border-primary {
+    margin: auto;
+}
+/*End of Event pages*/
+
+/*Style for staff page*/
+
+/*edit*/
+#customSwitch1:checked + .custom-control-label .unchecked-icon {
+    display: none;
+}
+
+#customSwitch1:not(:checked) + .custom-control-label .checked-icon {
+    display: none;
+}
+
+#customSwitch1:not(:checked) + .custom-control-label .unchecked-icon {
+    color: red;
+}
+
+/*details*/
+.list-group-item {
+    background-color: transparent;
+}
+
+/*End of staff pages*/
+
+
+/*Style for catering page*/
+
+/*index*/
+
+.catering-delete-alert {
+    color: #fff !important;
+}
+div:where(.swal2-container).swal2-center > .swal2-popup {
+    background: #1a0933;
+}
+
+/*foodItems*/
+/* Custom style for the description input */
+#swal-input-desc {
+    width: 80%;
+}
+
+.swal2-popup.swal2-modal.swal2-icon-success.swal2-show h2.swal2-title {
+    color: black !important;
+}
+
+/*food details card*/
+.food-details-card {
+    color: white !important
+}
+.color-white{
+    color: white;
+}
+
+/*End of catering pages*/
+/*Style for Fooditems page*/
+.select2-dropdown {
+    z-index: 4000;
+}
+
+/*#swal2-title {
+    color: white ;
+}*/
+
+.accordion-item {
+    border: 1px dashed;
+}
+/*End of Fooditems pages*/
+
+/*Style for Evet page*/
+
+/* details */
+.event-details-alert-title {
+    color: black;
+}
+
+
+/*End oif Evet page*/

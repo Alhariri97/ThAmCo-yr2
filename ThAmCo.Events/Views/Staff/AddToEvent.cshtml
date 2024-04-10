@@ -1,0 +1,42 @@
+﻿@model ThAmCo.Events.DTO.AddToEventViewModel
+
+@{
+    ViewData["Title"] = "Add Staff To Event";
+}
+
+<h2>Add Staff To Event</h2>
+<form asp-action="AddToEvent" method="post">
+    @if (Model.Staff != null)
+    {
+        <div>
+            <h4>Staff: @Model.Staff.FullName</h4>
+            <input type="hidden" asp-for="Staff.StaffId" name="staffId" />
+        </div>
+    }
+    @if (Model.Events.Count == 0)
+    {
+        <p>No events to add this stff to !</p>
+        
+    }
+    else
+    {   
+    <div class="form-group">
+        <label asp-for="Events">Select Event:</label>
+        <select name="eventId" asp-for="Events" class="form-control" asp-items="@(new SelectList(Model.Events, "EventId", "EventName"))">
+        </select>
+        <span asp-validation-for="Events" class="text-danger"></span>
+    </div>
+    }
+
+
+
+    <div class="mt-4 mb-5">
+        <button @(Model.Events.Count == 0 ? "disabled=true" : "") type="submit" class="btn btn-primary rounded rounded-3 me-2" data-toggle="tooltip" data-placement="top" title="Save">
+            <i class="bi bi-plus-circle-dotted "> Asign to Event</i>
+        </button>
+
+        <a asp-action="Details" class="btn btn-secondary rounded rounded-3 me-2" asp-route-id="@Model.Staff.StaffId" data-toggle="tooltip" data-placement="top" title="Back">
+            <i class="bi bi-arrow-return-left"> Back </i>
+        </a>
+    </div>
+</form>

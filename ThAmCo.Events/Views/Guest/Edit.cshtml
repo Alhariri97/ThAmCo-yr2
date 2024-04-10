@@ -1,0 +1,51 @@
+﻿@model ThAmCo.Events.Models.Guest
+@{
+    ViewData["Title"] = "Edit Guest";
+}
+<h2>Edit Guest</h2>
+
+<form asp-action="Edit" method="post">
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <input type="hidden" asp-for="GuestId" />
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-light rounded rounded-3 me-2" data-toggle="tooltip" data-placement="top" title="Save">
+            <i class="bi bi-floppy"> Save</i>
+        </button>
+        <a asp-action="Index" class="btn btn-secondary rounded rounded-3 me-2" data-toggle="tooltip" data-placement="top" title="Cancel">
+            <i class="bi bi-x-square"> Cancel</i>
+        </a>
+    </div>
+</form>

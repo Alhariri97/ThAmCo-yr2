@@ -1,0 +1,60 @@
+﻿@model DisplayFoodBookingDetailsViewModel
+
+@{
+    ViewData["Title"] = "Food Booking Details";
+}
+<h2>Food Booking Details</h2>
+
+
+<div>
+    <h5>Booking Date: @Model.FoodBookingDate.ToShortDateString()</h5>
+    <h5>Number Of Guest: @Model.NumberOfGuests</h5>
+    <h5>Food Menu: <a asp-controller="Catering" asp-action="Menus"> @Model.Menu.MenuName</a> </h5>
+    <h5>
+        Event:
+        @if (Model.Event == null)
+        {
+            <text>No Event</text>
+        }
+        else
+        {
+            <a asp-controller="Event" asp-action="Details" asp-route-id="@Model.Event?.EventId">
+                @Model.Event?.EventName
+            </a>
+        }
+    </h5>
+
+
+    @if (Model.Menu.FoodItems.Count > 0)
+    {
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Food name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var foodItem in Model.Menu.FoodItems)
+                {
+                    <tr class="table-active">
+                        <th scope="row">@foodItem.Name</th>
+                        <td>@foodItem.UnitPrice</td>
+                        <td>@foodItem.Description</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>This Menu is empty you can add food items from Menus </p>
+    }
+</div>
+
+
+<a href="javascript:history.back()" class="btn btn-secondary rounded rounded-3 me-2" data-toggle="tooltip" data-placement="top" title="Back">
+    <i class="bi bi-arrow-return-left"> Back </i>
+</a>

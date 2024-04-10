@@ -1,0 +1,78 @@
+﻿@model List<FoodItemDTO>
+
+@{
+    ViewData["Title"] = "Catering-FoodItems";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a asp-controller="" asp-action="Index">Home</a></li>
+    <li class="breadcrumb-item"><a asp-controller="Catering" asp-action="Index">Catering</a></li>
+    <li class="breadcrumb-item active">Food items</li>
+</ol>
+<h2>FoodItems</h2>
+<div class="mb-3">
+    <a href="#" type="button" id="create-food-item" class="btn btn-sm btn-light text-black rounded rounded-3">
+        <i class="bi bi-plus-circle-dotted"> Create Food item</i>
+    </a>
+    <a asp-controller="Catering" asp-action="Index" class=" btn btn-sm btn-secondary rounded rounded-3  mx-3" data-toggle="tooltip" data-placement="top" title="Back">
+        <i class="bi bi-arrow-return-left"> Back </i>
+    </a>
+</div>
+
+@if (Model.Count > 0)
+{
+
+    <table class="table table-hover mb-5">
+        <thead>
+            <tr>
+                <th scope="col">Food name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var foodItem in Model)
+            {
+                <tr class="table-active">
+                    <td scope="row">@foodItem.Name</td>
+                    <td>@foodItem.UnitPrice</td>
+                    <td>@foodItem.Description</td>
+                    <td>
+                        <div class=" d-flex justify-content-end">
+
+                            <a data-fooditem-id="@foodItem.FoodItemId"
+                               class="btn btn-light rounded rounded-3 me-2 details-food-item"
+                               data-toggle="tooltip" data-placement="top" title="Details">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a data-fooditem-id="@foodItem.FoodItemId"
+                               class="btn btn-info rounded rounded-3 me-2 edit-food-item"
+                               data-toggle="tooltip" data-placement="top" title="Edit">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                            <a data-fooditem-id="@foodItem.FoodItemId"
+                               class="btn btn-danger rounded rounded-3 me-2 delete-food-item"
+                               data-toggle="tooltip" data-placement="top" title="Delete">
+                                <i class="bi bi-trash3"></i>
+                            </a>
+
+
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No Food items to display </p>
+}
+
+
+
+
+@section Scripts {
+    <script type="module" src="~/js/cateringpages/fooditems.js" asp-append-version="true"></script>
+}
+

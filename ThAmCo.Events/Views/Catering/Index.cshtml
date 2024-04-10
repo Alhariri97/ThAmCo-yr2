@@ -1,0 +1,74 @@
+﻿@model List<FoodBookingViewModel>
+
+@{
+    ViewData["Title"] = "Catering";
+}
+<h2>Catering</h2>
+<h4>Wecllcome to catering, here all about food!</h4>
+
+<div class="d-flex mb-3 ">
+
+    <div class="mt-3 ">
+        <a asp-action="FoodItems" type="button" class="btn btn-sm btn-light text-black">
+            <i class="bi bi-egg"> Food Items</i>
+        </a>
+    </div>
+
+    <div class="mt-3 ml-3" style="margin-left: 20px;">
+        <a asp-action="Menus" type="button" class="btn btn-sm btn-light text-black ">
+            <i class="bi bi-list-columns"> &nbsp; &nbsp;  Menus</i>
+        </a>
+    </div>
+</div>
+<h4>Here are all the food bookings!</h4>
+<p>Note: you can't create food bookings from here. Food bookings are created from <a asp-controller="Event" asp-action="Index">Events</a> '</p>
+<div class=" row mt-4 mb-5">
+    @foreach (var booking in Model)
+    {
+        <div class="col-lg-4 col-md-6 col-xs-12  ">
+            <div class="card @((booking.ClientReferenceId == null) ? "border-warning" : "border-light") mb-5">
+                <div class="card-header">
+                    @booking.FoodBookingDate.ToShortDateString()
+
+                    @if (booking.ClientReferenceId == null)
+                    {
+                        <span style="position: absolute; top: 8px; right: 8px;">Canceld</span>
+                    }
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        @(booking.Event?.EventName == null ? "No event" : ("Event Name: " + booking.Event.EventName))
+                    </h4>
+                    <p class="card-text">Guests: @booking.NumberOfGuests</p>
+                    <div class=" d-flex justify-content-end">
+
+                        <a asp-controller="Catering" asp-action="Details"
+                           asp-route-id="@booking.FoodBookingId" class="btn btn-light rounded rounded-3 me-2"
+                           data-toggle="tooltip" data-placement="top" title="Ditals">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a asp-controller="Catering" asp-action="Edit"
+                           asp-route-id="@booking.FoodBookingId" class="btn btn-info rounded rounded-3 me-2"
+                           data-toggle="tooltip" data-placement="top" title="Edit">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                        <a href="javascript:;"
+                           class="btn btn-danger rounded rounded-3 me-2 js-delete-cancel "
+                           data-foodbooking-id="@booking.FoodBookingId"
+                           data-client-reference-id="@booking.ClientReferenceId"
+                           data-toggle="tooltip" data-placement="top" title="@((booking.ClientReferenceId == null) ? " Delete" : " Cancel") ">
+                            <i class=" bi @((booking.ClientReferenceId == null) ? " bi-trash3" : " bi-x-circle") "></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+@section Scripts {
+    <script type="module" src="~/js/cateringpages/index.js" asp-append-version="true"></script>
+}
+

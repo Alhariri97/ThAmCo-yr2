@@ -1,0 +1,108 @@
+﻿@model CreateEventFormViewModel
+
+@{
+    ViewData["Title"] = "Create Event";
+}
+
+<h2>Create Event</h2>
+
+<form method="post" asp-controller="Event">
+
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="EventName" class="form-label mt-4"></label>
+                <input type="text" class="form-control" asp-for="EventName" placeholder="Enter Event Name">
+                <span asp-validation-for="EventName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EventDate" class="form-label mt-4"></label>
+                <input type="date" class="form-control" asp-for="EventDate">
+                <span asp-validation-for="EventDate" class="text-danger"></span>
+            </div>
+           
+            <input asp-for="EventTypeName" type="text" id="EventTypeName" style="display: none;" />
+
+            <div class="form-group">
+                <label asp-for="EventTypeId" class="form-label mt-4"></label>
+                <select class="form-select" asp-for="EventTypeId" asp-items="Model.EventtypesFromApi">
+                    <option disabled="true">Please select event type.</option>
+                </select>
+                <span asp-validation-for="EventTypeId" class="text-danger"></span>
+
+            </div>
+            
+
+
+
+
+
+
+        </div>
+
+
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label asp-for="SelectedMenuId" class="form-label mt-4"></label>
+                <select class="form-select" asp-for="SelectedMenuId" asp-items="Model.MenusForBooking">
+                    <option value="">Choose a menu</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedAvailability" class="form-label mt-4">Available Venues</label>
+                <select id="SelectedAvailability" name="SelectedAvailability" class="form-select select2">
+                    <option value="">Please select event type and date.</option>
+                </select>
+            </div>
+            <div id="selectedAvailabilityDetails">
+            </div>
+
+
+@* 
+            <div class="form-group">
+                <label asp-for="SelectedStaffs" class="form-label mt-4"></label>
+                <select class="form-select" asp-for="SelectedStaffs" asp-items="Model.Staffs"
+                        data-placeholder="Search & Select Staff">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedGuests" class="form-label mt-4"></label>
+                <select class="form-select" asp-for="SelectedGuests" asp-items="Model.Guests"
+                        data-placeholder="Search & Select Guests">
+                    <option value=""></option>
+                </select>
+            </div> *@
+
+ 
+        </div>
+    </div>
+    <button type="submit" class="btn btn-light text-black ">Create</button>
+    <a asp-action="Index" class="btn btn-secondary  m-4">Cancel</a>
+    @* hiiden date for the request *@
+    <input hidden type="date" class="form-control" asp-for="TomorrowDate">
+
+</form>
+
+
+<script>
+    @*
+        NOTE:
+        If you found this code here please know that:
+        For separation of concern reasons, we should move this
+        script to wwwroot/js, a new file called something like
+        createEventPage.js, and this script should be moved there
+        and only reference the new js file location here:  <script src="~/js/createEventPage.js"></script>
+        I'm having a problem doing that on my machine as I have been deploying
+        NPM packages and I messed up my Node, NPM, and Eslint versions :(.
+        *@
+
+</script>
+@section Scripts {
+    <script src="~/js/eventpages/createevent.js" asp-append-version="true"></script>
+    <script src="~/js/eventpages/index.js" asp-append-version="true"></script>
+}

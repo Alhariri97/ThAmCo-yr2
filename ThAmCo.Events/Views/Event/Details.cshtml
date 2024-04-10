@@ -1,0 +1,160 @@
+﻿@model DetailsEventFormViewModel
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+
+<div class=" border-primary mb-5  even-info">
+    <div class="d-flex justify-content-md-between">
+        <h4>Event Information</h4>
+        <div class="">
+            @if (!Model.IsThereOneStaffPerTenGuests)
+            {
+                <span>This event is short of staff</span>
+                @if (Model.IsThereFirstAider)
+                {
+                    <span> and</span>
+                }
+            }
+            @if (!Model.IsThereFirstAider)
+            {
+                <span>No first aider</span>
+            }
+
+        </div>
+
+    </div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Event Name:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayNameFor(model => model.EventDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EventDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EventDate)
+        </dd>
+
+        <dt class="col-sm-2">
+            Food Booking
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.FoodBookingId))
+            {
+                
+                <a asp-action="Details" asp-controller="Catering" asp-route-id="@Model.FoodBookingId"> Have A look at the food</a>
+            }
+            else
+            {
+                <p>No food Booking</p>
+                <a asp-controller="Event" asp-action="Edit" asp-route-id="@Model.EventId">Book Food</a>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Venu reservation
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.ReservationId))
+            {
+                <p> Venu reserved</p>
+            }
+            else
+            {
+                <p>No food Venu Reservation</p>
+                <a asp-controller="Event" asp-action="Edit" asp-route-id="@Model.EventId">Book Venu</a>
+            }
+        </dd>
+    </dl>
+
+    <div class="row">
+        <div class="col-md-6">
+            <p>Staff - Total number : @Model.Staff?.Count()</p>
+            <div class="form-group">
+                @if ((Model.Staff ?? Enumerable.Empty<StaffDTO>()).Any())
+                {
+                    <table class="table">
+                        <thead>
+                            <tr class="d-flex justify-content-between">
+                                <th>Name</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Staff?.Any() == true)
+                            {
+                                @foreach (var staff in Model.Staff)
+                                {
+                                    <tr class="d-flex justify-content-between">
+                                        <td>@staff.FullName</td>
+                                        <td>@staff.Position</td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No staff available.</p>
+                }
+            </div>
+        </div>
+
+        <!-- vertical line between the two columns -->
+        <div class="col-md-1 border-end border-2"></div>
+
+        <div class="col-md-5">
+            <p>Guests - Total number : @Model.Guests.Count() </p>
+            <div class="form-group">
+                @if (Model.Guests.Any())
+                {
+                    <table class="table">
+                        <thead>
+                            <tr class="d-flex justify-content-between">
+                                <th>Name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var guest in Model.Guests)
+                            {
+                                <tr class="d-flex justify-content-between">
+                                    <td>@guest.FullName</td>
+                                    <td>@guest.Email</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No guests available.</p>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-secondary rounded rounded-3 me-2" data-toggle="tooltip" data-placement="top" title="Back">
+        <i class="bi bi-arrow-return-left"> Back </i>
+    </a>
+    <a asp-controller="Event" asp-action="Edit" asp-route-id="@Model.EventId"
+    class="btn btn-info rounded rounded-3 me-2" data-toggle="tooltip" data-placement="top" title="Edit">
+        <i class="bi bi-pencil-fill"> Edit</i>
+    </a>
+</div>
+
+
+
+
+@section Scripts {
+    <script type="module" src="~/js/eventpages/detailsevent.js" asp-append-version="true" ></script>
+}
+

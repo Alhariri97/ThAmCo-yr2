@@ -1,0 +1,156 @@
+﻿@model EditEventFormViewModel
+
+@{
+    ViewData["Title"] = "Edint event";
+}
+
+<h2>Edit Event</h2>
+
+
+<form asp-controller="Event" >
+
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="EventName" class="form-label mt-4"></label>
+                <input asp-for="EventName" class="form-control"   />
+                <span  asp-validation-for="EventName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventDate" class="form-label mt-4"></label>
+                <span class="text-danger">(Unchangeable)</span>
+                <input readonly type="date" class="form-control" asp-for="EventDate">
+                <span asp-validation-for="EventDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EventTypeName" class="form-label mt-4"></label>
+                <span class="text-danger">(Unchangble)</span>
+                <input readonly class="form-control" asp-for="EventTypeName">
+                <span asp-validation-for="EventTypeName" class="text-danger"></span>
+            </div>
+
+            <input asp-for="EventTypeName" type="text" id="EventTypeName" style="display: none;" />
+
+
+            @if (Model.Reservation == null)
+            {
+                <div class="form-group">
+                    <label asp-for="SelectedAvailability" class="form-label mt-4">Available Venues</label>
+                    <select id="SelectedAvailability" name="SelectedAvailability" class="form-select select2">
+                        <option value="">Please select event type and date.</option>
+                    </select>
+                </div>
+            }
+
+            <button type="submit" class="btn btn-light text-black ">
+                <i class="bi bi-floppy"> Save</i>
+            </button>
+            <a asp-action="Index" class="btn btn-secondary  m-4">
+                <i class="bi bi-x-square"> Cancel</i></a>
+        </div>
+
+
+        <div class="col-md-6">
+
+
+
+            <div class="form-group">
+                <label asp-for="SelectedStaffs" class="form-label mt-4"></label>
+                <select class="form-select" asp-for="SelectedStaffs" asp-items="Model.Staffs"
+                        data-placeholder="Search & Select Staff"> 
+                    <option value=""> </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedGuests" class="form-label mt-4"></label>
+                <select class="form-select" asp-for="SelectedGuests" asp-items="Model.Guests"
+                        data-placeholder="Search & Select Guests">
+                    <option value=""></option>
+                </select>
+            </div>
+
+            @if (Model.FoodBooking != null)
+            {
+                <label asp-for="SelectedMenuId" class="form-label mt-4">Food Booking </label>
+
+                <div class="card border-light mt-1 ">
+                    <div class=" d-flex justify-content-between">
+                        <div class="card-body">
+                            <h6 class="card-title"> Food Booking Confirmed</h6>
+                            <a asp-controller="Catering" asp-action="Details"
+                            asp-route-id="@Model.FoodBooking.FoodBookingId" class="card-text">Menu:  @Model?.Menu?.MenuName</a>
+                        </div>
+                        <div>
+                            <a href="javascript:;"
+                               class="btn btn-danger rounded rounded-3  cancel-food  mt-3 mx-3"
+                               data-event-id="@Model.EventId"
+                               data-foodbooking-id="@Model.FoodBooking.FoodBookingId"
+                               data-toggle="tooltip" data-placement="top" title="Cancel This Food! ">
+                                <i class=" bi bi-x-circle "> Cancel This Food</i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label asp-for="SelectedMenuId" class="form-label mt-4"></label>
+                    <select class="form-select" asp-for="SelectedMenuId" asp-items="Model.MenusForBooking">
+                        <option value="">Choose a menu</option>
+                    </select>
+                </div>
+            }
+
+
+            @if (Model.Reservation != null)
+            {
+                <div class="card border-light mt-4 ">
+                    <div class=" d-flex justify-content-between">
+                    <div class="card-body">
+                        <h6 class="card-title"> Venue Booking Confirmed</h6>
+                        <p class="card-text">Booked on:  @Model.Reservation.WhenMade</p>
+                    </div>
+                    <div>
+                        <a href="javascript:;"
+                           class="btn btn-danger rounded rounded-3  cancel-venu  mt-3 mx-3"
+                               data-reservation-id="@Model.Reservation.Reference"
+                               data-event-id="@Model.EventId"
+                           data-toggle="tooltip" data-placement="top" title="Cancel This Venu! ">
+                            <i class=" bi bi-x-circle "> Cancel This Venu</i>
+                        </a>
+                    </div>
+                    </div>
+
+                </div>
+            }
+            
+            <div id="selectedAvailabilityDetails">
+              
+            </div>
+        </div>
+    </div>
+
+    @* hiiden date for  request *@
+    <input hidden readonly type="date" class="form-control" asp-for="TomorrowDate">
+    <input hidden readonly type="text" class="form-control" asp-for="EventTypeId">
+    <input hidden readonly type="text" class="form-control" asp-for="EventId">
+</form>
+@{
+    var startDate = Model.TomorrowDate;
+    var endDate = Model.EventDate;
+}
+
+
+
+
+@section Scripts {
+    <script type="module" src="~/js/eventpages/editevent.js" asp-append-version="true"></script>
+}
+
+
+

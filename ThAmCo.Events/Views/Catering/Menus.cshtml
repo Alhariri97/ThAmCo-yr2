@@ -1,0 +1,75 @@
+﻿@model List<MenuDTO>
+
+@{
+    ViewData["Title"] = "Catering-Menus";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a asp-controller="" asp-action="Index">Home</a></li>
+    <li class="breadcrumb-item"><a asp-controller="Catering" asp-action="Index">Catering</a></li>
+    <li class="breadcrumb-item active">Menus</li>
+</ol>
+<h2>Menus</h2>
+<div class="mb-3">
+    <a href="#" type="button" id="create-food-menu" class="btn btn-sm btn-light text-black rounded rounded-3">
+        <i class="bi bi-plus-circle-dotted"> Create Menu</i>
+    </a>
+    <a asp-controller="Catering" asp-action="Index"
+       class=" btn btn-sm btn-secondary rounded rounded-3  mx-3"
+       data-toggle="tooltip" data-placement="top" title="Back">
+        <i class="bi bi-arrow-return-left"> Back </i>
+    </a>
+</div>
+@if (Model.Count > 0)
+{
+    <div class="accordion mb-5 " id="accordionExample">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var menu = Model[i];
+            var accordionId = $"collapse-{i}";
+
+            <div class="accordion-item mb-5">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#@accordionId"
+                            aria-expanded="false" aria-controls="@accordionId" data-menu-id="@menu.MenuId">
+                        @menu.MenuName
+                    </button>
+                    <button class="btn btn-primary btn-sm ms-2 add-food-btn" data-menu-id="@menu.MenuId">
+                        <i class="bi bi-plus-circle-dotted"> Add Food Item</i>
+
+                    </button>
+                    <button class="btn btn-primary btn-sm ms-2 change-name-btn" data-menu-id="@menu.MenuId">
+                        <i class="bi bi-pencil-fill"> Change Menu Name</i>
+                    </button>
+                    <button class="btn btn-primary btn-sm ms-2 delete-menu-btn" data-menu-id="@menu.MenuId">
+                        <i class="bi bi-trash3"> Delete This Menu</i>
+                    </button>
+
+                </h2>
+                <div id="@accordionId" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body" id="accordionBody-@menu.MenuId">
+                        <!-- Content will here -->
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No menus to display!</p>
+}
+
+
+@*
+//
+// I used ajsx here mainly for Ui/ux reasens. coz it does not make that sense to send the
+// user to an new page to create, delete or edit a fooditem in/from a menu.
+//
+ *@
+
+@section Scripts {
+    <script type="module" src="~/js/cateringpages/menus.js" asp-append-version="true"></script>
+}
+
+

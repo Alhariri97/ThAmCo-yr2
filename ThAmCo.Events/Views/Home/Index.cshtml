@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to ThAmCo Application </h1>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h3>Landing page! </h3>
+    }
+    else
+    {
+        <p>
+            <a class=" text-light" asp-area="" asp-controller="Account" asp-action="Login">Login or sign up</a>
+            to use the App
+        </p>
+    }
+</div>

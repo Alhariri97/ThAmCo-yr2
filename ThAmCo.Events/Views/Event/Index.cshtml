@@ -1,0 +1,153 @@
+﻿@model List<DisplayEventsFromViewModel>
+@{
+    ViewData["Title"] = "Events";
+}
+
+<h2>Events</h2>
+
+<div class="container  d-flex justify-content-between p-0  mb-4">
+    <div>
+        <a asp-action="Create" type="button" class="btn btn-sm btn-light text-black">
+            <i class="bi bi-plus-circle-dotted"> Create Event</i>
+        </a>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-dismissible alert-warning mt-5">
+        <h4 class="alert-heading">No Events!</h4>
+        <p class="mb-0">No events to display! </p>
+    </div>
+}
+else
+{
+
+
+    <div id="card-view" class=" row mt-5 mb-5">
+        @foreach (var myEvent in Model.Where(e => !e.IsCanceled))
+        {
+            <div class="col-lg-4 col-md-6 col-xs-12  ">
+                <div class="card  border-light mb-5 ">
+                    <div class="card-header">
+                        @myEvent.EventDate.ToShortDateString()
+                    </div>
+
+                    <div class="card-body">
+                        <h4 class="card-title">@myEvent.EventName</h4>
+                        <p class="card-text"> Event Type: @myEvent.EventTypeName</p>
+                        @if (!string.IsNullOrEmpty(@myEvent.ReservationId))
+                        {
+                            <p class="card-text"> Venu Reservaion: confirmed</p>
+                        }
+                        else
+                        {
+                            <p>Venu Reservaion: <a asp-controller="Event" asp-action="Edit" asp-route-id="@myEvent.EventId">Book Venu</a></p>
+                        }
+
+                        @if (!string.IsNullOrEmpty(@myEvent.FoodBookingId))
+                        {
+                            <p class="card-text"> Food Booking: confirmed</p>
+                        }
+                        else
+                        {
+                            <p>Food Booking: <a asp-controller="Event" asp-action="Edit" asp-route-id="@myEvent.EventId">Book Food</a></p>
+                        }
+                        <p class="card-text" style="min-height:40px">
+
+                            @if (!myEvent.IsThereOneStaffPerTenGuests)
+                            {
+                                <span class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Warning: Not assigned enough staff for this event!">
+                                    <i class="bi bi-person-fill-exclamation"></i> 
+                                </span>
+                            }
+                            @if (!myEvent.IsThereFirstAider)
+                            {
+                                <span class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Warning: None of the staff is a first aider!">
+                                    <i class="bi bi-heart-pulse"></i>
+                                </span>
+                            }
+                            @if (myEvent.IsThereOneStaffPerTenGuests && myEvent.IsThereFirstAider)
+                            {
+                                <span class="btn btn-success" data-toggle="tooltip" data-placement="top" title="All looks good ">
+                                    <i class="bi bi-hand-thumbs-up"></i>
+                                </span>
+                            }
+                        </p>
+                        <div class=" d-flex justify-content-end">
+                            <a asp-controller="Event" asp-action="Details" asp-route-id="@myEvent.EventId"
+                               class="btn btn-light rounded rounded-3 me-2" data-toggle="tooltip"
+                               data-placement="top" title="Ditals">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a asp-controller="Event" asp-action="Edit" asp-route-id="@myEvent.EventId"
+                               class="btn btn-info rounded rounded-3 me-2" data-toggle="tooltip"
+                               data-placement="top" title="Edit">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                            <a href="javascript:;"
+                               class="btn btn-danger rounded rounded-3 me-2 cancel-event "
+                               data-event-id="@myEvent.EventId"
+                               data-toggle="tooltip" data-placement="top" title="Cancel event">
+                                <i class=" bi bi-x-circle "></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <hr />
+        @foreach (var canceledEvent in Model.Where(e => e.IsCanceled))
+        {
+
+            <div class="col-lg-4 col-md-6 col-xs-12  ">
+                <div class="card  border-warning mb-5 ">
+                    <div class="card-header">
+                        <del>@canceledEvent.EventDate.ToShortDateString()</del>
+                        <span style="position: absolute; top: 8px; right: 8px;">Canceld</span>
+                    </div>
+
+                    <div class="card-body">
+                        <h4 class="card-title">@canceledEvent.EventName</h4>
+                        <p class="card-text"> Event Type: @canceledEvent.EventTypeName</p>
+                        <p class="card-text"> Venu Reservaion: Canceled</p>
+                        <p class="card-text"> Food Booking: Canceled</p>
+
+                        <p class="card-text" style="min-height:40px">
+
+                            <span class="btn btn-danger" data-toggle="tooltip"
+                            data-placement="top" title="has been canceled ">
+                                <i class="bi bi-x-circle"></i>
+                            </span>
+                        </p>
+                        <div class=" d-flex justify-content-end">
+                            <a href="javascript:;"
+                               class="btn btn-danger rounded rounded-3 me-2 delete-event "
+                               data-event-id="@canceledEvent.EventId"
+                               data-toggle="tooltip" data-placement="top" title="delete event">
+                                <i class=" bi bi-trash3"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+
+    </div>
+
+}
+
+
+
+@section Scripts {
+    @*
+            asp-append-version this attribute keeps trak of any new changes to the js file
+            and apply them, in real world or prod env the user won't need to hard reload
+            or close the broser to get the new changes!
+        *@
+    <script type="module" src="~/js/eventpages/index.js" asp-append-version="true"></script>
+}
+

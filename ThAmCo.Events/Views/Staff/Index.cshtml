@@ -1,0 +1,65 @@
+﻿@model List<ThAmCo.Events.Models.Staff>
+@{
+    ViewData["Title"] = "Staff";
+}
+
+<h2>Staff</h2>
+
+<div>
+    <a asp-action="Create" type="button" class="btn btn-sm btn-light text-black mb-4">
+        <i class="bi bi-plus-circle-dotted"> Create Staff</i>
+    </a>
+</div>
+<table class="table mb-5">
+    <thead>
+        <tr>
+            <th>
+                Full Name
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                Position
+            </th>
+            <th>
+                Aider
+            </th>
+            <th>
+                
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td>
+                    <span class=" fs-2 @((item.FirstAider) ? "bi-shield-check text-success" : "bi-shield text-danger")" title="@((item.FirstAider) ? "First Aider" : "Not a First Aider")"></span>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.StaffId" class="btn btn-light rounded rounded-3 me-2" data-toggle="tooltip" data-placement="top" title="Ditals">
+                        <i class="bi bi-eye"></i> Details
+                    </a>
+                    <a asp-action="Edit" asp-route-id="@item.StaffId" class="btn btn-info rounded rounded-3 me-2" data-toggle="tooltip" data-placement="top" title="Edit">
+                        <i class="bi bi-pencil-fill"></i> Edit
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.StaffId" class="btn btn-danger rounded rounded-3 me-2" data-toggle="tooltip" data-placement="top" title="Delete">
+                        <i class="bi bi-trash3"></i> Delete
+                    </a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

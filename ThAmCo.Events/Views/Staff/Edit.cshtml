@@ -1,0 +1,68 @@
+﻿@model ThAmCo.Events.DTO.StaffDTO
+
+@{
+    ViewData["Title"] = "Edit Staff";
+}
+
+<h2>Edit Staff Information</h2>
+
+<form asp-action="Edit" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="FirstName">First Name:</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Position">Position:</label>
+                <input asp-for="Position" class="form-control" />
+                <span asp-validation-for="Position" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="HieraData">Hiera Date:</label>
+                <input asp-for="HieraData" type="date" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="LastName">Last Name:</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PhoneNumber">Phone Number:</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstAider">First Aider:</label>
+                <div class="custom-control custom-switch">
+                    <input asp-for="FirstAider" type="checkbox" class="custom-control-input" id="customSwitch1" style="display: none;">
+                    <label class="custom-control-label" for="customSwitch1"> 
+                        Check if Staff is a First Aider
+                        <span class="bi bi-shield fs-2 unchecked-icon"></span> <!-- Icon for unchecked state -->
+                        <span class="bi bi-shield-check fs-2 checked-icon"></span> <!-- Icon for checked state -->
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="mt-4">
+        <input type="hidden" asp-for="StaffId" />
+        <button type="submit" class="btn btn-light rounded rounded-3 me-2" data-toggle="tooltip" data-placement="top" title="Save">
+            <i class="bi bi-floppy"> Save</i>
+        </button>
+        <a asp-action="Index" class="btn btn-secondary rounded rounded-3 me-2" data-toggle="tooltip" data-placement="top" title="Cancel">
+            <i class="bi bi-x-square"> Cancel</i>
+        </a>
+    </div>
+
+</form>

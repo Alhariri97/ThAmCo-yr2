@@ -1,0 +1,10 @@
+﻿@model List<VenueDTO>
+
+<h3>Available Venues</h3>
+
+<ul>
+    @foreach (var venue in Model)
+    {
+        <li>@venue. - @venue.Name</li>
+    }
+</ul>

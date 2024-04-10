@@ -1,0 +1,65 @@
+﻿@model ThAmCo.Events.Models.Guest
+
+<h2>Guest Details</h2>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+    </dl>
+</div>
+
+<div class="mt-4 mb-4">
+    <h4>Events Associated</h4>
+    <hr />
+
+    @if (Model.GuestBookings.Count > 0)
+    {
+    <ul>
+        @foreach (var booking in Model.GuestBookings)
+        {
+            <li>
+                <a asp-controller="Event" asp-action="Details" asp-route-id="@booking.EventId">
+                    @booking.Event.EventName
+                </a>
+            </li>
+        }
+    </ul>
+    }else{
+        <h6>No Events Associated with this Guest </h6>
+        <p> You can add guests to an event from the event details.</p>
+    }
+</div>
+
+<div>
+
+    <a asp-action="Index" class="btn btn-secondary rounded rounded-3 me-2" data-toggle="tooltip" data-placement="top" title="Back">
+        <i class="bi bi-arrow-return-left"> Back </i>
+    </a>
+</div>
