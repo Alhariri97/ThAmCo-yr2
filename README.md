@@ -1,3 +1,4 @@
+
 # # ThAmCo Full Stack C# Project
 
 ## Overview
@@ -86,3 +87,7 @@ Feel free to contribute to this project by submitting issues or pull requests. F
 ## License
 
 This project is free for use, Develop, deploy.
+If you are a Teesside Student please don't just copy and past or submit this project you'll get cought for plagiarism rather have a look and try to understand it.
+You are more than wellcome to get in touch if you needed!
+
+..............................Happy haking! :).........................................................
